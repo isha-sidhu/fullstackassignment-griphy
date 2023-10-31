@@ -99,7 +99,7 @@ const DashboardComponent: React.FC = () => {
   // Function to add GIF to user's liked GIFs
   const addToLiked = async (gifURL: String) => {
     if (!user) {
-      alert("Login required to save liked GIFs.");
+      alert("Please Login to save GIFs.");
       return;
     }
     try {
@@ -110,10 +110,10 @@ const DashboardComponent: React.FC = () => {
       const snapshot = await getDocs(query(gifRef, where("url", "==", gifURL)));
 
       if (!snapshot.empty) {
-        alert("GIF already in liked!");
+        alert("Gif already bookmarked!");
       } else {
         await addDoc(gifRef, { url: gifURL });
-        alert("GIF added to liked!");
+        alert("Bookmarked Gif!");
       }
     } catch (error) {
       console.error("Error adding GIF:", error);
@@ -123,7 +123,7 @@ const DashboardComponent: React.FC = () => {
   // Function to copy GIF URL to clipboard
   const copyLink = (url: string) => {
     navigator.clipboard.writeText(url).then(() => {
-      alert("Link copied!");
+      alert("Gif copied!");
     });
   };
 

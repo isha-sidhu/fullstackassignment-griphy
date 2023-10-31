@@ -46,9 +46,9 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-semibold mb-6">Sign Up</h2>
+    <div className="min-h-screen flex items-center justify-center bg-black">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-gray-800">Sign Up</h2>
         <form onSubmit={handleSignup}>
           <div className="mb-4">
             <input
@@ -81,7 +81,7 @@ const Signup: React.FC = () => {
             />
           </div>
           <button
-            className="w-full bg-blue-500 text-white font-semibold p-2 rounded-lg"
+            className="w-full bg-gray-800 text-white font-medium p-3 rounded-md"
             type="submit"
           >
             Sign Up
@@ -91,7 +91,9 @@ const Signup: React.FC = () => {
         <nav className="mt-4">
           Already a user?{" "}
           <Link href="/">
-            <span className="text-blue-500 underline">Login</span>
+            <span className="text-gray-800 underline cursor-pointer">
+              Login
+            </span>
           </Link>
         </nav>
       </div>

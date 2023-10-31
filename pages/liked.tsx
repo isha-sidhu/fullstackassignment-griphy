@@ -60,7 +60,7 @@ const LikedGIFs: React.FC = () => {
   // Copy GIF URL to clipboard
   const copyLink = (url: string) => {
     navigator.clipboard.writeText(url).then(() => {
-      alert("Link copied!");
+      alert("Gif copied!");
     });
   };
 
@@ -78,7 +78,7 @@ const LikedGIFs: React.FC = () => {
       updateGifCollection((prevGifs) =>
         prevGifs.filter((gif) => gif.id !== gifId)
       );
-      alert("GIF removed from liked.");
+      alert("Removed from bookmarks.");
     } catch (error) {
       console.error("Error removing liked GIF:", error);
     }

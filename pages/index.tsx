@@ -5,73 +5,77 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import Link from "next/link";
 
-const Login: React.FC = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<string>("");
+const SignIn: React.FC = () => {
+  const [userEmail, setUserEmail] = useState<string>("");
+  const [userPassword, setUserPassword] = useState<string>("");
+  const [errorText, setErrorText] = useState<string>("");
 
-  const router = useRouter();
+  const navigate = useRouter();
 
-  // Email regex pattern
-  const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  // Regular expression for email validation
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-  const handleLogin = async (e: FormEvent) => {
+  const processLogin = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (!email.match(emailPattern)) {
-      setErrorMessage("Invalid email format.");
+    if (!userEmail.match(emailRegex)) {
+      setErrorText("Please enter a valid email address.");
       return;
     }
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      router.push("/home"); // Redirect to dashboard or another page after successful login
+      await signInWithEmailAndPassword(auth, userEmail, userPassword);
+      navigate.push("/home"); // Navigate to dashboard after successful login
     } catch (error) {
       if (error instanceof FirebaseError) {
-        setErrorMessage(error.message);
+        setErrorText(error.message);
       } else {
-        setErrorMessage("An unknown error occurred.");
+        setErrorText("Unexpected error occurred.");
       }
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-semibold mb-6">Login</h2>
-        <form onSubmit={handleLogin}>
-          <div className="mb-4">
+    <div className="min-h-screen flex items-center justify-center bg-black">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 justify-center text-gray-800">
+          Hey, Welcome! Sign In
+        </h2>
+        <form onSubmit={processLogin}>
+          <div className="mb-5">
             <input
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-3 border rounded-md"
               type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              placeholder="User Email"
+              value={userEmail}
+              onChange={(e) => setUserEmail(e.target.value)}
               required
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-5">
             <input
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-3 border rounded-md"
               type="password"
               placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={userPassword}
+              onChange={(e) => setUserPassword(e.target.value)}
               required
             />
           </div>
           <button
-            className="w-full bg-blue-500 text-white font-semibold p-2 rounded-lg"
+            className="w-full bg-gray-800 text-white font-medium p-3 rounded-md"
             type="submit"
           >
-            Login
+            Sign In
           </button>
         </form>
-        {errorMessage && <p className="text-red-500 mt-4">{errorMessage}</p>}
-        <nav className="mt-4">
-          Not a Member ?{" "}
-          <Link href="/signup">
-            <span className="text-blue-500 underline">Sign Up</span>
+        {errorText && <p className="text-red-600 mt-5">{errorText}</p>}
+        <nav className="mt-5">
+          Join Us?{" "}
+          <Link href="/register">
+            <span className="text-gray-800 underline cursor-pointer">
+              Register
+            </span>
           </Link>
         </nav>
       </div>
@@ -79,4 +83,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default SignIn;
